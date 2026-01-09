@@ -1,0 +1,183 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+}
+
+:root {
+  --radius: 0.625rem;
+
+  /* 복지 레이더 브랜드 컬러 */
+  --background: #FAF8F5;      /* Warm Cream */
+  --foreground: #2D3436;      /* Deep Charcoal */
+
+  --card: #FFFFFF;
+  --card-foreground: #2D3436;
+  --popover: #FFFFFF;
+  --popover-foreground: #2D3436;
+
+  --primary: #3D5A80;         /* Twilight Blue */
+  --primary-foreground: #FFFFFF;
+
+  --secondary: #F1F5F9;
+  --secondary-foreground: #2D3436;
+
+  --muted: #F1F5F9;
+  --muted-foreground: #636E72;
+
+  --accent: #E07A5F;          /* Coral */
+  --accent-foreground: #FFFFFF;
+
+  --destructive: #DC2626;
+  --border: #E2E8F0;
+  --input: #E2E8F0;
+  --ring: #3D5A80;
+
+  /* Chart Colors (위기 등급) */
+  --chart-1: #DC2626;         /* Critical - Red */
+  --chart-2: #EA580C;         /* Warning - Orange */
+  --chart-3: #CA8A04;         /* Attention - Yellow */
+  --chart-4: #16A34A;         /* Normal - Green */
+  --chart-5: #3D5A80;         /* Primary */
+
+  /* Sidebar */
+  --sidebar: #FFFFFF;
+  --sidebar-foreground: #2D3436;
+  --sidebar-primary: #3D5A80;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #F1F5F9;
+  --sidebar-accent-foreground: #2D3436;
+  --sidebar-border: #E2E8F0;
+  --sidebar-ring: #3D5A80;
+
+  /* 위기 등급 컬러 */
+  --risk-critical: #DC2626;
+  --risk-critical-bg: #FEE2E2;
+  --risk-warning: #EA580C;
+  --risk-warning-bg: #FFEDD5;
+  --risk-attention: #CA8A04;
+  --risk-attention-bg: #FEF9C3;
+  --risk-normal: #16A34A;
+  --risk-normal-bg: #DCFCE7;
+
+  /* 6차원 위기 컬러 */
+  --dimension-economic: #3B82F6;
+  --dimension-health: #EF4444;
+  --dimension-isolation: #8B5CF6;
+  --dimension-housing: #F97316;
+  --dimension-family: #EC4899;
+  --dimension-administrative: #06B6D4;
+}
+
+.dark {
+  --background: #1A1A1A;
+  --foreground: #FAFAFA;
+  --card: #262626;
+  --card-foreground: #FAFAFA;
+  --popover: #262626;
+  --popover-foreground: #FAFAFA;
+  --primary: #5D7A9E;
+  --primary-foreground: #FFFFFF;
+  --secondary: #363636;
+  --secondary-foreground: #FAFAFA;
+  --muted: #363636;
+  --muted-foreground: #A1A1AA;
+  --accent: #E8957E;
+  --accent-foreground: #FFFFFF;
+  --destructive: #EF4444;
+  --border: #363636;
+  --input: #363636;
+  --ring: #5D7A9E;
+
+  --sidebar: #262626;
+  --sidebar-foreground: #FAFAFA;
+  --sidebar-primary: #5D7A9E;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #363636;
+  --sidebar-accent-foreground: #FAFAFA;
+  --sidebar-border: #363636;
+  --sidebar-ring: #5D7A9E;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+/* 커스텀 유틸리티 클래스 */
+@layer utilities {
+  /* 위기 등급 배지 */
+  .badge-critical {
+    @apply bg-[var(--risk-critical-bg)] text-[var(--risk-critical)] border border-[var(--risk-critical)]/20;
+  }
+  .badge-warning {
+    @apply bg-[var(--risk-warning-bg)] text-[var(--risk-warning)] border border-[var(--risk-warning)]/20;
+  }
+  .badge-attention {
+    @apply bg-[var(--risk-attention-bg)] text-[var(--risk-attention)] border border-[var(--risk-attention)]/20;
+  }
+  .badge-normal {
+    @apply bg-[var(--risk-normal-bg)] text-[var(--risk-normal)] border border-[var(--risk-normal)]/20;
+  }
+
+  /* 위기 등급 왼쪽 보더 */
+  .border-l-critical {
+    @apply border-l-4 border-l-[var(--risk-critical)];
+  }
+  .border-l-warning {
+    @apply border-l-4 border-l-[var(--risk-warning)];
+  }
+  .border-l-attention {
+    @apply border-l-4 border-l-[var(--risk-attention)];
+  }
+  .border-l-normal {
+    @apply border-l-4 border-l-[var(--risk-normal)];
+  }
+}
