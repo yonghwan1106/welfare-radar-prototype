@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { Bell, ChevronDown, Search, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
@@ -40,37 +41,41 @@ export function Header({ title }: HeaderProps) {
       {/* 우측 액션 영역 */}
       <div className="flex items-center gap-2">
         {/* 검색 버튼 */}
-        <Button
-          variant="ghost"
-          size="sm"
-          className="hidden md:flex items-center gap-2 text-muted-foreground hover:text-foreground px-3 py-2 h-9 rounded-lg border border-border/50 bg-muted/30 hover:bg-muted/50 transition-all"
-        >
-          <Search className="h-4 w-4" />
-          <span className="text-sm">검색</span>
-          <kbd className="ml-2 pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border border-border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground">
-            ⌘K
-          </kbd>
-        </Button>
+        <Link href="/search">
+          <Button
+            variant="ghost"
+            size="sm"
+            className="hidden md:flex items-center gap-2 text-muted-foreground hover:text-foreground px-3 py-2 h-9 rounded-lg border border-border/50 bg-muted/30 hover:bg-muted/50 transition-all"
+          >
+            <Search className="h-4 w-4" />
+            <span className="text-sm">검색</span>
+            <kbd className="ml-2 pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border border-border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground">
+              ⌘K
+            </kbd>
+          </Button>
+        </Link>
 
         {/* 알림 버튼 */}
-        <Button
-          variant="ghost"
-          size="icon"
-          className={cn(
-            'relative h-9 w-9 rounded-lg transition-all hover:bg-muted',
-            notificationCount > 0 && 'text-primary'
-          )}
-        >
-          <Bell className="h-5 w-5" />
-          {notificationCount > 0 && (
-            <span className="absolute -right-0.5 -top-0.5 flex h-5 w-5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75" />
-              <span className="relative inline-flex items-center justify-center rounded-full h-5 w-5 bg-gradient-to-r from-red-500 to-rose-500 text-[10px] font-bold text-white shadow-lg shadow-red-500/30">
-                {notificationCount}
+        <Link href="/notifications">
+          <Button
+            variant="ghost"
+            size="icon"
+            className={cn(
+              'relative h-9 w-9 rounded-lg transition-all hover:bg-muted',
+              notificationCount > 0 && 'text-primary'
+            )}
+          >
+            <Bell className="h-5 w-5" />
+            {notificationCount > 0 && (
+              <span className="absolute -right-0.5 -top-0.5 flex h-5 w-5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75" />
+                <span className="relative inline-flex items-center justify-center rounded-full h-5 w-5 bg-gradient-to-r from-red-500 to-rose-500 text-[10px] font-bold text-white shadow-lg shadow-red-500/30">
+                  {notificationCount}
+                </span>
               </span>
-            </span>
-          )}
-        </Button>
+            )}
+          </Button>
+        </Link>
 
         {/* 구분선 */}
         <div className="h-6 w-px bg-border mx-1" />
@@ -112,12 +117,16 @@ export function Header({ title }: HeaderProps) {
                 </div>
               </div>
             </DropdownMenuLabel>
-            <DropdownMenuItem className="rounded-lg cursor-pointer">
-              내 프로필
-            </DropdownMenuItem>
-            <DropdownMenuItem className="rounded-lg cursor-pointer">
-              설정
-            </DropdownMenuItem>
+            <Link href="/profile">
+              <DropdownMenuItem className="rounded-lg cursor-pointer">
+                내 프로필
+              </DropdownMenuItem>
+            </Link>
+            <Link href="/settings">
+              <DropdownMenuItem className="rounded-lg cursor-pointer">
+                설정
+              </DropdownMenuItem>
+            </Link>
             <DropdownMenuSeparator className="my-2" />
             <DropdownMenuItem className="rounded-lg cursor-pointer text-destructive focus:text-destructive">
               로그아웃
