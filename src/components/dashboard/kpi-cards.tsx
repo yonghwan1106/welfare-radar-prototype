@@ -1,6 +1,6 @@
 'use client';
 
-import { AlertTriangle, Users, CheckCircle, Clock } from 'lucide-react';
+import { AlertTriangle, Users, CheckCircle, Clock, TrendingUp, TrendingDown, ArrowRight } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 
@@ -11,13 +11,34 @@ interface KPICardProps {
   changeLabel?: string;
   icon: React.ElementType;
   variant?: 'default' | 'critical' | 'warning' | 'success';
+  index?: number;
 }
 
-const variantStyles = {
-  default: 'bg-primary/10 text-primary',
-  critical: 'bg-red-100 text-red-600',
-  warning: 'bg-orange-100 text-orange-600',
-  success: 'bg-green-100 text-green-600',
+const variantConfig = {
+  default: {
+    iconBg: 'bg-gradient-to-br from-blue-500 to-indigo-600',
+    iconShadow: 'shadow-blue-500/30',
+    border: 'border-blue-100',
+    hover: 'hover:border-blue-200',
+  },
+  critical: {
+    iconBg: 'bg-gradient-to-br from-red-500 to-rose-600',
+    iconShadow: 'shadow-red-500/30',
+    border: 'border-red-100',
+    hover: 'hover:border-red-200',
+  },
+  warning: {
+    iconBg: 'bg-gradient-to-br from-orange-500 to-amber-600',
+    iconShadow: 'shadow-orange-500/30',
+    border: 'border-orange-100',
+    hover: 'hover:border-orange-200',
+  },
+  success: {
+    iconBg: 'bg-gradient-to-br from-green-500 to-emerald-600',
+    iconShadow: 'shadow-green-500/30',
+    border: 'border-green-100',
+    hover: 'hover:border-green-200',
+  },
 };
 
 function KPICard({
@@ -27,25 +48,62 @@ function KPICard({
   changeLabel,
   icon: Icon,
   variant = 'default',
+  index = 0,
 }: KPICardProps) {
+  const config = variantConfig[variant];
+  const isPositiveChange = change !== undefined && change > 0;
+  const isNegativeChange = change !== undefined && change < 0;
+
   return (
-    <Card>
-      <CardContent className="pt-6">
+    <Card
+      className={cn(
+        'relative overflow-hidden border-2 transition-all duration-300 hover-lift',
+        config.border,
+        config.hover,
+        'animate-fade-in-up opacity-0'
+      )}
+      style={{ animationDelay: `${index * 100}ms`, animationFillMode: 'forwards' }}
+    >
+      {/* 배경 패턴 */}
+      <div className="absolute inset-0 bg-gradient-to-br from-white via-white to-muted/30" />
+      <div className="absolute top-0 right-0 w-32 h-32 -mr-8 -mt-8 rounded-full bg-muted/20" />
+
+      <CardContent className="relative pt-6 pb-5">
         <div className="flex items-start justify-between">
-          <div>
+          <div className="space-y-3">
             <p className="text-sm font-medium text-muted-foreground">{title}</p>
-            <p className="mt-2 text-3xl font-bold">{value}</p>
+            <div className="flex items-baseline gap-2">
+              <p className="text-4xl font-bold tracking-tight counter">{value}</p>
+            </div>
             {change !== undefined && (
-              <p className={cn(
-                'mt-1 text-xs',
-                change > 0 ? 'text-red-600' : change < 0 ? 'text-green-600' : 'text-muted-foreground'
+              <div className={cn(
+                'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium',
+                isPositiveChange && variant === 'critical'
+                  ? 'bg-red-100 text-red-700'
+                  : isNegativeChange && variant === 'critical'
+                  ? 'bg-green-100 text-green-700'
+                  : isPositiveChange
+                  ? 'bg-green-100 text-green-700'
+                  : isNegativeChange
+                  ? 'bg-red-100 text-red-700'
+                  : 'bg-muted text-muted-foreground'
               )}>
-                {change > 0 ? '+' : ''}{change}% {changeLabel}
-              </p>
+                {isPositiveChange ? (
+                  <TrendingUp className="h-3 w-3" />
+                ) : isNegativeChange ? (
+                  <TrendingDown className="h-3 w-3" />
+                ) : null}
+                {change > 0 ? '+' : ''}{change}%
+                <span className="text-xs opacity-80">{changeLabel}</span>
+              </div>
             )}
           </div>
-          <div className={cn('rounded-lg p-3', variantStyles[variant])}>
-            <Icon className="h-6 w-6" />
+          <div className={cn(
+            'flex h-14 w-14 items-center justify-center rounded-2xl shadow-lg',
+            config.iconBg,
+            config.iconShadow
+          )}>
+            <Icon className="h-7 w-7 text-white" />
           </div>
         </div>
       </CardContent>
@@ -95,9 +153,9 @@ export function KPICards({ data }: KPICardsProps) {
   ];
 
   return (
-    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      {kpis.map((kpi) => (
-        <KPICard key={kpi.title} {...kpi} />
+    <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      {kpis.map((kpi, index) => (
+        <KPICard key={kpi.title} {...kpi} index={index} />
       ))}
     </div>
   );
