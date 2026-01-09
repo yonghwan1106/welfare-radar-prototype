@@ -283,23 +283,22 @@
     border-left-color: var(--risk-normal);
     box-shadow: inset 4px 0 8px -4px rgba(34, 197, 94, 0.3);
   }
-}
 
-/* Custom Component Styles */
-/* Gradient classes - inline CSS */
-.bg-gradient-primary {
-  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
-}
+  /* Gradient utilities */
+  .bg-gradient-primary {
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+  }
 
-.bg-gradient-accent {
-  background: linear-gradient(135deg, var(--gradient-accent-start), var(--gradient-accent-end));
-}
+  .bg-gradient-accent {
+    background: linear-gradient(135deg, var(--gradient-accent-start), var(--gradient-accent-end));
+  }
 
-.text-gradient {
-  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  .text-gradient {
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
 }
 
 /* Hover Lift Effect */
